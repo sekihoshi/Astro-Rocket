@@ -24,7 +24,7 @@ function formatRfc822Date(date: Date): string {
 export async function GET(context: APIContext) {
   // Get only English, non-draft posts for RSS
   const posts = await getCollection('blog', ({ data }) =>
-    data.locale === 'en' && !data.draft
+    data.locale === 'en' && data.tags.includes('蘑菇视频') && !data.draft
   );
 
   // Sort posts by date (newest first)
@@ -64,7 +64,7 @@ export async function GET(context: APIContext) {
     <description>${escapeXml(siteConfig.description)}</description>
     <link>${siteUrl}</link>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml"/>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <lastBuildDate>${formatRfc822Date(new Date())}</lastBuildDate>
 ${items}
   </channel>

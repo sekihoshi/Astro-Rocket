@@ -36,14 +36,15 @@ const {
 
 const pageTitle = title ? `${title} — ${siteConfig.name}` : siteConfig.name;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = siteConfig.url.endsWith('/') ? siteConfig.url : `${siteConfig.url}/`;
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
 // Process image - fall back to the static default OG image
 let ogImage: string;
 if (image) {
-  ogImage = image.startsWith('http') ? image : new URL(image, Astro.site).toString();
+  ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).toString();
 } else {
-  ogImage = new URL(siteConfig.ogImage, Astro.site).toString();
+  ogImage = new URL(siteConfig.ogImage, siteUrl).toString();
 }
 
 const robotsContent = [noindex ? 'noindex' : 'index', nofollow ? 'nofollow' : 'follow'].join(', ');
@@ -77,11 +78,11 @@ const i18nOn = i18nIsEnabled();
 const hreflangAlternates = i18nOn
   ? getLocales().map((loc) => ({
       hreflang: loc,
-      href: new URL(swapLocaleInPath(Astro.url.pathname, loc), Astro.site).toString(),
+      href: new URL(swapLocaleInPath(Astro.url.pathname, loc), siteUrl).toString(),
     }))
   : [];
 const xDefaultHref = i18nOn
-  ? new URL(swapLocaleInPath(Astro.url.pathname, defaultLocale), Astro.site).toString()
+  ? new URL(swapLocaleInPath(Astro.url.pathname, defaultLocale), siteUrl).toString()
   : null;
 ---
 

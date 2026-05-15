@@ -2,14 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import { assets, cases, faqs, industries, keywords, process, proof, services } from '../data/landing';
+import { brandNav } from '../data/pages';
 
-const navItems = [
-  ['服务', '#services'],
-  ['行业', '#industries'],
-  ['方法', '#process'],
-  ['案例', '#cases'],
-  ['FAQ', '#faq'],
-];
+const navItems = brandNav.map((item) => [item.navLabel, item.path]);
 
 const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1800&q=84';
 ---
@@ -30,7 +25,7 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
       {navItems.map(([label, href]) => <a href={href}>{label}</a>)}
     </nav>
 
-    <a class="nav-cta" href="#contact">
+    <a class="nav-cta" href="/contact/">
       <Icon name="send" size="sm" />
       获取内容方案
     </a>
@@ -56,7 +51,7 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
               预约诊断
               <Icon name="arrow-right" size="sm" />
             </a>
-            <a class="ghost-btn" href="#services">
+            <a class="ghost-btn" href="/services/">
               查看服务
               <Icon name="list-checks" size="sm" />
             </a>
@@ -225,7 +220,9 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
 
   <footer slot="footer" class="mogu-footer">
     <span>蘑菇视频</span>
-    <span>短视频制作 · 品牌宣传片 · 内容增长</span>
+    <nav aria-label="页脚导航">
+      {navItems.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
   </footer>
 </BaseLayout>
 
@@ -296,7 +293,7 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
     color: rgba(255, 250, 241, 0.76);
     font-size: 14px;
     font-weight: 800;
-    padding: 9px 13px;
+    padding: 9px 10px;
   }
 
   .desktop-nav a:hover {
@@ -616,8 +613,15 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
   .industry-list h3,
   .process-list h3 {
     margin: 20px 0 0;
+    color: #211713;
+    -webkit-text-fill-color: #211713;
     font-size: 20px;
     font-weight: 950;
+  }
+
+  .case-card h3 {
+    color: #211713;
+    -webkit-text-fill-color: #211713;
   }
 
   .service-card p,
@@ -869,6 +873,23 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
     font-weight: 950;
   }
 
+  .mogu-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px 18px;
+  }
+
+  .mogu-footer a {
+    color: inherit;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .mogu-footer a:hover {
+    color: #fffaf3;
+  }
+
   /* Contrast pass: keep the warm brand direction, but use cleaner surfaces and stronger text. */
   :global(body) {
     background: #fffaf3;
@@ -964,13 +985,21 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
   .services,
   .faq,
   .asset-wall {
-    background: #fff4e7;
+    background: #f3e5d5;
   }
 
   .intro,
   .industries,
   .cases {
-    background: #fffaf3;
+    background: #fbf2e8;
+  }
+
+  .intro h2,
+  .section-head h2,
+  .split-head h2,
+  .asset-copy h2 {
+    color: #211713;
+    -webkit-text-fill-color: #211713;
   }
 
   .section-kicker,
@@ -996,8 +1025,8 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
   .case-card,
   .faq-list details,
   .asset-grid span {
-    border-color: rgba(33, 23, 19, 0.12);
-    background: #fffdf8;
+    border-color: rgba(33, 23, 19, 0.16);
+    background: #fff9ef;
     color: #211713;
   }
 
@@ -1049,8 +1078,31 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
   }
 
   @media (max-width: 980px) {
+    .mogu-nav {
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      border-radius: 26px;
+    }
+
     .desktop-nav {
+      order: 3;
+      display: flex;
+      width: 100%;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 0 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .desktop-nav::-webkit-scrollbar {
       display: none;
+    }
+
+    .desktop-nav a {
+      flex: 0 0 auto;
+      background: rgba(255, 250, 241, 0.08);
+      white-space: nowrap;
     }
 
     .hero-inner,
@@ -1083,6 +1135,16 @@ const heroImage = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?
       top: 12px;
       width: calc(100% - 24px);
       border-radius: 24px;
+      padding: 10px 10px 9px;
+    }
+
+    .brand {
+      font-size: 15px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
     }
 
     .nav-cta {

@@ -4,6 +4,7 @@ import type {
   Person,
   LocalBusiness,
   BlogPosting,
+  Blog,
   BreadcrumbList,
   FAQPage,
   WithContext,
@@ -30,17 +31,21 @@ export function createPersonSchema(): WithContext<Person> {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Astro Rocket',
-    jobTitle: 'Web Designer & Developer',
+    name: siteConfig.author,
+    jobTitle: '视频内容制作与营销服务',
     url: siteConfig.url,
     email: siteConfig.email,
     ...(siteConfig.authorImage ? { image: `${siteConfig.url}${siteConfig.authorImage}` } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Veghel',
-      addressRegion: 'Noord-Brabant',
-      addressCountry: 'NL',
-    },
+    ...(siteConfig.address
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: siteConfig.address.city,
+            addressRegion: siteConfig.address.state,
+            addressCountry: siteConfig.address.country,
+          },
+        }
+      : {}),
     sameAs: siteConfig.socialLinks,
   };
 }
@@ -57,15 +62,21 @@ export function createProfessionalServiceSchema(): WithContext<LocalBusiness> {
     email: siteConfig.email,
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
     ...(siteConfig.authorImage ? { image: `${siteConfig.url}${siteConfig.authorImage}` } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Veghel',
-      addressRegion: 'Noord-Brabant',
-      addressCountry: 'NL',
-    },
+    ...(siteConfig.address
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: siteConfig.address.street,
+            addressLocality: siteConfig.address.city,
+            addressRegion: siteConfig.address.state,
+            postalCode: siteConfig.address.zip,
+            addressCountry: siteConfig.address.country,
+          },
+        }
+      : {}),
     areaServed: [
-      { '@type': 'Country', name: 'Netherlands' },
-      { '@type': 'Country', name: 'Worldwide' },
+      { '@type': 'Country', name: '中国' },
+      { '@type': 'AdministrativeArea', name: '上海' },
     ],
     sameAs: siteConfig.socialLinks,
   };
@@ -106,7 +117,21 @@ export function createBlogPostSchema(post: {
   datePublished: Date;
   dateModified?: Date;
   author: { name: string; url?: string };
+  keywords?: string[];
 }): WithContext<BlogPosting> {
+  const author =
+    post.author.name === siteConfig.name
+      ? {
+          '@type': 'Organization' as const,
+          name: post.author.name,
+          url: post.author.url,
+        }
+      : {
+          '@type': 'Person' as const,
+          name: post.author.name,
+          url: post.author.url,
+        };
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -114,13 +139,10 @@ export function createBlogPostSchema(post: {
     description: post.description,
     url: post.url,
     image: post.image,
+    ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}),
     datePublished: post.datePublished.toISOString(),
     dateModified: post.dateModified?.toISOString() || post.datePublished.toISOString(),
-    author: {
-      '@type': 'Person',
-      name: post.author.name,
-      url: post.author.url,
-    },
+    author,
     publisher: {
       '@type': 'Organization',
       name: siteConfig.name,
@@ -137,6 +159,38 @@ export function createBlogPostSchema(post: {
       '@type': 'WebPage',
       '@id': post.url,
     },
+  };
+}
+
+/**
+ * Create Blog schema for the blog listing page
+ */
+export function createBlogSchema(blog: {
+  name: string;
+  description: string;
+  url: string;
+  keywords?: string[];
+}): WithContext<Blog> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: blog.name,
+    description: blog.description,
+    url: blog.url,
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      ...(siteConfig.branding.logo.imageUrl
+        ? {
+            logo: {
+              '@type': 'ImageObject',
+              url: `${siteConfig.url}${siteConfig.branding.logo.imageUrl}`,
+            },
+          }
+        : {}),
+    },
+    ...(blog.keywords?.length ? { keywords: blog.keywords.join(', ') } : {}),
   };
 }
 

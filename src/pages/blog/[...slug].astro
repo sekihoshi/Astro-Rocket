@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
-    return data.locale === 'en' && (import.meta.env.PROD ? data.draft !== true : true);
+    return data.locale === 'en' && data.tags.includes('蘑菇视频') && (import.meta.env.PROD ? data.draft !== true : true);
   });
 
   return posts.map((post) => ({
@@ -20,6 +20,7 @@ const { Content, headings } = await render(post);
 <BlogLayout
   title={post.data.title}
   description={post.data.description}
+  keywords={post.data.keywords.length > 0 ? post.data.keywords : post.data.tags}
   publishedAt={post.data.publishedAt}
   updatedAt={post.data.updatedAt}
   author={post.data.author}

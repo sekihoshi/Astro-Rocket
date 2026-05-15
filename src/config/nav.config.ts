@@ -26,17 +26,19 @@ export interface LegalLink {
 }
 
 export const navItems: NavItem[] = [
-  { label: 'Blog', href: '/blog', order: 1 },
-  { label: 'Projects', href: '/projects', order: 2 },
-  { label: 'About', href: '/about', order: 3 },
-  { label: 'Contact', href: '/contact', order: 4 },
+  { label: '服务', href: '/services/', order: 1 },
+  { label: '案例', href: '/cases/', order: 2 },
+  { label: '方案', href: '/solutions/', order: 3 },
+  { label: '最新资讯', href: '/blog/', order: 4 },
+  { label: '联系', href: '/contact/', order: 5 },
 ];
 
 export const footerNavItems: NavItem[] = [
-  { label: 'Blog', href: '/blog', order: 1 },
-  { label: 'Projects', href: '/projects', order: 2 },
-  { label: 'About', href: '/about', order: 3 },
-  { label: 'Contact', href: '/contact', order: 4 },
+  { label: '服务', href: '/services/', order: 1 },
+  { label: '案例', href: '/cases/', order: 2 },
+  { label: '方案', href: '/solutions/', order: 3 },
+  { label: '最新资讯', href: '/blog/', order: 4 },
+  { label: '联系', href: '/contact/', order: 5 },
 ];
 
 export const legalLinks: LegalLink[] = [];
