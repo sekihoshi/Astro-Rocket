@@ -14,6 +14,7 @@ import siteConfig from '@/config/site.config';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string | string[];
   image?: string;
   imageAlt?: string;
   article?: {
@@ -34,6 +35,7 @@ interface Props {
 const {
   title,
   description,
+  keywords,
   image,
   imageAlt,
   article,
@@ -61,7 +63,7 @@ schemas.push(...extraSchemas);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth dark" data-theme="blue" data-theme-mode="system">
+<html lang={siteConfig.i18n?.defaultLocale ?? 'zh-CN'} class="scroll-smooth dark" data-theme="blue" data-theme-mode="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,6 +86,7 @@ schemas.push(...extraSchemas);
     <SEO
       title={title}
       description={description}
+      keywords={keywords}
       image={image}
       imageAlt={imageAlt}
       article={article}

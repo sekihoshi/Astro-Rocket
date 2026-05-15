@@ -120,30 +120,21 @@ export interface SiteConfig {
 }
 
 const siteConfig: SiteConfig = {
-  name: 'Astro Rocket',
+  name: '蘑菇视频',
   description:
-    'Astro Rocket — A production-ready Astro 6 starter with 12 beautiful themes, 57+ components, built-in i18n, dark mode and a fast, modern foundation to build anything on.',
-  url: SITE_URL || 'https://astrorocket.dev',
+    '蘑菇视频为品牌、商家和创作者提供短视频策划、商业拍摄、AI 视频创作、账号运营与视频增长服务。',
+  url: SITE_URL || 'https://mogu.video',
   ogImage: '/og-default.svg',
-  author: 'Hans Martens',
-  email: 'hello@hansmartens.dev',
+  author: '蘑菇视频',
+  email: 'info@mogu.video',
   address: {
     street: '',
-    city: 'Veghel',
+    city: '上海',
     state: '',
     zip: '',
-    country: 'the Netherlands',
+    country: '中国',
   },
-  socialLinks: [
-    'https://github.com/hansmartensdev',
-    'https://x.com/hansmartens_dev',
-    'https://www.linkedin.com',
-    'https://bsky.app/profile/hansmartensdev.bsky.social',
-  ],
-  twitter: {
-    site: 'https://x.com/hansmartens_dev',
-    creator: '@hansmartens_dev',
-  },
+  socialLinks: [],
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
     bing: BING_SITE_VERIFICATION,
@@ -179,15 +170,15 @@ const siteConfig: SiteConfig = {
   i18n: i18nConfig,
   branding: {
     logo: {
-      alt: 'Astro Rocket',
+      alt: '蘑菇视频',
       imageUrl: '/favicon.svg',
     },
     favicon: {
       svg: '/favicon.svg',
     },
     colors: {
-      themeColor: '#3b82f6',
-      backgroundColor: '#ffffff',
+      themeColor: '#8b3dff',
+      backgroundColor: '#fff7fb',
     },
   },
 };

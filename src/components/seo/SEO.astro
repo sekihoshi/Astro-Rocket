@@ -10,6 +10,7 @@ import {
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string | string[];
   image?: string;
   imageAlt?: string;
   article?: {
@@ -25,6 +26,7 @@ interface Props {
 const {
   title,
   description = siteConfig.description,
+  keywords,
   image,
   imageAlt,
   article,
@@ -45,6 +47,7 @@ if (image) {
 }
 
 const robotsContent = [noindex ? 'noindex' : 'index', nofollow ? 'nofollow' : 'follow'].join(', ');
+const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 
 // Normalize BCP-47 locale (e.g. "en") to OG language_TERRITORY format (e.g. "en_US")
 const localeMap: Record<string, string> = {
@@ -52,7 +55,7 @@ const localeMap: Record<string, string> = {
   pt: 'pt_BR', nl: 'nl_NL', ja: 'ja_JP', ko: 'ko_KR', zh: 'zh_CN',
   ru: 'ru_RU', ar: 'ar_SA', hi: 'hi_IN', pl: 'pl_PL', sv: 'sv_SE',
 };
-const rawLocale = Astro.currentLocale || 'en_US';
+const rawLocale = Astro.currentLocale || siteConfig.i18n?.defaultLocale || 'en';
 const locale = rawLocale.includes('_') || rawLocale.includes('-')
   ? rawLocale.replace('-', '_')
   : (localeMap[rawLocale] || `${rawLocale}_${rawLocale.toUpperCase()}`);
@@ -85,6 +88,7 @@ const xDefaultHref = i18nOn
 <!-- Primary Meta Tags -->
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
+{keywordsContent && <meta name="keywords" content={keywordsContent} />}
 <link rel="canonical" href={canonicalURL.toString()} />
 <meta name="robots" content={robotsContent} />
 
